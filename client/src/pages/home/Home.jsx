@@ -3,15 +3,20 @@ import Header from "../../components/header/Header";
 import Posts from "../../components/posts/Posts";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./home.css";
-import axios from "axios";
+// import axios from "axios";
+import postsApi from "../../api/postsApi";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get("http://localhost:5000/api/posts");
-      setPosts(res.data);
+      try {
+        const res = await postsApi.getAllBook();
+        setPosts(res);
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchPosts();
   }, []);
